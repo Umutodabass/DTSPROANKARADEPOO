@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useStore, User } from '../store/useStore';
+import { useStore, type User } from '../store/useStore';
 import { Users, Plus, Trash2, Edit2, X, Check } from 'lucide-react';
 
 export const Personnel: React.FC = () => {
