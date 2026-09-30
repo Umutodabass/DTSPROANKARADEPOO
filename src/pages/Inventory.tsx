@@ -114,7 +114,17 @@ export const Inventory: React.FC = () => {
         </div>
         <div className="mt-4 sm:mt-0">
           <button 
-            onClick={() => setIsAddModalOpen(true)}
+            onClick={() => {
+              setNewStock({
+                productId: products[0]?.id || '',
+                locationId: locations[0]?.id || '',
+                quantity: 1,
+                status: 'working',
+                serialNumber: '',
+                notes: ''
+              });
+              setIsAddModalOpen(true);
+            }}
             className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium shadow-sm"
           >
             <PackagePlus className="w-4 h-4 mr-2" />
@@ -253,7 +263,6 @@ export const Inventory: React.FC = () => {
                     onChange={e => setNewStock({...newStock, productId: e.target.value})}
                     className="w-full px-3 py-2 border border-slate-300 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-blue-500 bg-white dark:bg-slate-800 text-slate-900 dark:text-white"
                   >
-                    <option value="" disabled>Ürün Seçin</option>
                     {products.map(p => (
                       <option key={p.id} value={p.id}>{p.name}</option>
                     ))}
@@ -268,7 +277,6 @@ export const Inventory: React.FC = () => {
                     onChange={e => setNewStock({...newStock, locationId: e.target.value})}
                     className="w-full px-3 py-2 border border-slate-300 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-blue-500 bg-white dark:bg-slate-800 text-slate-900 dark:text-white"
                   >
-                    <option value="" disabled>Lokasyon Seçin</option>
                     {locations.map(l => (
                       <option key={l.id} value={l.id}>{l.name}</option>
                     ))}
@@ -372,7 +380,6 @@ export const Inventory: React.FC = () => {
                     onChange={e => setNewStock({...newStock, productId: e.target.value})}
                     className="w-full px-3 py-2 border border-slate-300 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-blue-500 bg-white dark:bg-slate-800 text-slate-900 dark:text-white"
                   >
-                    <option value="" disabled>Ürün Seçin</option>
                     {products.map(p => (
                       <option key={p.id} value={p.id}>{p.name}</option>
                     ))}
@@ -387,7 +394,6 @@ export const Inventory: React.FC = () => {
                     onChange={e => setNewStock({...newStock, locationId: e.target.value})}
                     className="w-full px-3 py-2 border border-slate-300 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-blue-500 bg-white dark:bg-slate-800 text-slate-900 dark:text-white"
                   >
-                    <option value="" disabled>Lokasyon Seçin</option>
                     {locations.map(l => (
                       <option key={l.id} value={l.id}>{l.name}</option>
                     ))}

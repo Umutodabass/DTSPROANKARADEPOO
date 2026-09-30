@@ -8,13 +8,17 @@ export const Definitions: React.FC = () => {
   const categories = useMemo(() => Array.from(new Set(products.map(p => p.category))), [products]);
   
   const [newProductName, setNewProductName] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('');
-  const [isNewCategory, setIsNewCategory] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState(categories[0] || 'new');
+  const [isNewCategory, setIsNewCategory] = useState(categories.length === 0);
   const [customCategory, setCustomCategory] = useState('');
   
   const [newLocationName, setNewLocationName] = useState('');
-  const [newLocationCity, setNewLocationCity] = useState('');
+  const [newLocationCity, setNewLocationCity] = useState('İstanbul');
   const [newLocationType, setNewLocationType] = useState<'warehouse'|'field'>('field');
+
+  const TURKISH_CITIES = [
+    "Adana", "Adıyaman", "Afyonkarahisar", "Ağrı", "Amasya", "Ankara", "Antalya", "Artvin", "Aydın", "Balıkesir", "Bilecik", "Bingöl", "Bitlis", "Bolu", "Burdur", "Bursa", "Çanakkale", "Çankırı", "Çorum", "Denizli", "Diyarbakır", "Edirne", "Elazığ", "Erzincan", "Erzurum", "Eskişehir", "Gaziantep", "Giresun", "Gümüşhane", "Hakkari", "Hatay", "Isparta", "Mersin", "İstanbul", "İzmir", "Kars", "Kastamonu", "Kayseri", "Kırklareli", "Kırşehir", "Kocaeli", "Konya", "Kütahya", "Malatya", "Manisa", "Kahramanmaraş", "Mardin", "Muğla", "Muş", "Nevşehir", "Niğde", "Ordu", "Rize", "Sakarya", "Samsun", "Siirt", "Sinop", "Sivas", "Tekirdağ", "Tokat", "Trabzon", "Tunceli", "Şanlıurfa", "Uşak", "Van", "Yozgat", "Zonguldak", "Aksaray", "Bayburt", "Karaman", "Kırıkkale", "Batman", "Şırnak", "Bartın", "Ardahan", "Iğdır", "Yalova", "Karabük", "Kilis", "Osmaniye", "Düzce"
+  ].sort();
 
   const handleAddProduct = (e: React.FormEvent) => {
     e.preventDefault();
@@ -82,7 +86,6 @@ export const Definitions: React.FC = () => {
                   className="w-40 px-3 py-2 border border-slate-300 dark:border-slate-700 rounded-lg text-sm bg-transparent dark:text-white"
                   required
                 >
-                  <option value="" disabled>Kategori Seçin</option>
                   {categories.map(c => (
                     <option key={c} value={c}>{c}</option>
                   ))}
@@ -139,14 +142,16 @@ export const Definitions: React.FC = () => {
                   className="flex-1 px-3 py-2 border border-slate-300 dark:border-slate-700 rounded-lg text-sm bg-transparent dark:text-white"
                   required
                 />
-                <input 
-                  type="text" 
-                  placeholder="Şehir" 
+                <select
                   value={newLocationCity}
                   onChange={e => setNewLocationCity(e.target.value)}
-                  className="w-28 px-3 py-2 border border-slate-300 dark:border-slate-700 rounded-lg text-sm bg-transparent dark:text-white"
+                  className="w-36 px-3 py-2 border border-slate-300 dark:border-slate-700 rounded-lg text-sm bg-transparent dark:text-white"
                   required
-                />
+                >
+                  {TURKISH_CITIES.map(city => (
+                    <option key={city} value={city}>{city}</option>
+                  ))}
+                </select>
               </div>
               <div className="flex gap-3 items-center">
                 <select 

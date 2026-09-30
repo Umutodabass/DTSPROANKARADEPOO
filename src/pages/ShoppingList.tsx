@@ -6,7 +6,7 @@ import { cn } from '../lib/utils';
 export const ShoppingList: React.FC = () => {
   const { shoppingList, addShoppingItem, updateShoppingItem, toggleShoppingItem, deleteShoppingItem, products, currentUser } = useStore();
   
-  const [selectedProductId, setSelectedProductId] = useState('');
+  const [selectedProductId, setSelectedProductId] = useState(products[0]?.id || 'other');
   const [customItemName, setCustomItemName] = useState('');
   const [newItemQty, setNewItemQty] = useState(1);
   const [supplier, setSupplier] = useState('');
@@ -34,6 +34,8 @@ export const ShoppingList: React.FC = () => {
     }
     
     if (editingItemId) {
+      if (!window.confirm(`${itemName} adlı ürünü güncellemek istediğinize emin misiniz?`)) return;
+      
       updateShoppingItem(editingItemId, {
         name: itemName,
         category: itemCategory,
@@ -121,7 +123,6 @@ export const ShoppingList: React.FC = () => {
                 className="w-full px-4 py-2 border border-slate-300 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-slate-800 text-slate-900 dark:text-white"
                 required
               >
-                <option value="" disabled>Sistemden Makine/Ürün Seçin...</option>
                 {products.map(p => (
                   <option key={p.id} value={p.id}>{p.name} ({p.category})</option>
                 ))}
