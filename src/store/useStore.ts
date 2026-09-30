@@ -241,10 +241,18 @@ export const useStore = create<AppState>()((set, get) => ({
   toggleShoppingItem: async (id) => {
     const item = get().shoppingList.find(i => i.id === id);
     if (!item) return;
+    
+    // Optimistic UI update
+    set(state => ({
+      shoppingList: state.shoppingList.map(i => i.id === id ? { ...i, isCompleted: !item.isCompleted } : i)
+    }));
+
     const { error } = await supabase.from('shopping_list').update({ is_completed: !item.isCompleted }).eq('id', id);
-    if (!error) {
+    
+    // Revert on error
+    if (error) {
       set(state => ({
-        shoppingList: state.shoppingList.map(i => i.id === id ? { ...i, isCompleted: !i.isCompleted } : i)
+        shoppingList: state.shoppingList.map(i => i.id === id ? { ...i, isCompleted: item.isCompleted } : i)
       }));
     }
   },

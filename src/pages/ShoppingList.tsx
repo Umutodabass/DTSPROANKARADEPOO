@@ -213,7 +213,7 @@ export const ShoppingList: React.FC = () => {
                   </button>
                   <div className="flex-1 min-w-0">
                     <p className={cn(
-                      "text-sm font-medium truncate transition-all duration-200",
+                      "text-sm font-medium truncate transition-all duration-75",
                       item.isCompleted 
                         ? "text-slate-400 dark:text-slate-500 line-through" 
                         : "text-slate-900 dark:text-white"
