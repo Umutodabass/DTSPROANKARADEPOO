@@ -41,7 +41,7 @@ export const Login: React.FC = () => {
         <img 
           src="/dtslogo.png" 
           alt="Background Logo" 
-          className="w-[300vw] h-[300vw] sm:w-[150vw] sm:h-[150vw] max-w-none object-contain animate-[spin_90s_linear_infinite] filter grayscale" 
+          className="w-[300vw] h-[300vw] sm:w-[150vw] sm:h-[150vw] max-w-none object-contain animate-[spin_30s_linear_infinite] filter grayscale" 
         />
       </div>
       

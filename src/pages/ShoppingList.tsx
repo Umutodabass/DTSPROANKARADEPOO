@@ -220,7 +220,11 @@ export const ShoppingList: React.FC = () => {
                     <Pencil className="w-5 h-5" />
                   </button>
                   <button
-                    onClick={() => deleteShoppingItem(item.id)}
+                    onClick={() => {
+                      if (window.confirm(`${item.name} adlı ürünü alınacaklar listesinden silmek istediğinize emin misiniz?`)) {
+                        deleteShoppingItem(item.id);
+                      }
+                    }}
                     className="p-2 text-slate-400 hover:text-red-600 dark:hover:text-red-400 transition-colors rounded-lg hover:bg-red-50 dark:hover:bg-red-900/20"
                     title="Sil"
                   >

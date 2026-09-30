@@ -1,9 +1,9 @@
 import React from 'react';
 import { useStore } from '../store/useStore';
-import { Wrench, MapPin, Package, AlertTriangle } from 'lucide-react';
+import { Wrench, MapPin, Package, AlertTriangle, CheckCircle2 } from 'lucide-react';
 
 export const Maintenance: React.FC = () => {
-  const { inventory, products, locations } = useStore();
+  const { inventory, products, locations, updateInventoryItem } = useStore();
 
   // Filter inventory items that have status = 'maintenance'
   const maintenanceItems = inventory.filter(item => item.status === 'maintenance');
@@ -32,6 +32,7 @@ export const Maintenance: React.FC = () => {
                   <th className="px-6 py-4">Bulunduğu Lokasyon</th>
                   <th className="px-6 py-4">Miktar</th>
                   <th className="px-6 py-4">Seri Numarası / Notlar</th>
+                  <th className="px-6 py-4 text-right">İşlemler</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-200 dark:divide-slate-800">
@@ -79,6 +80,19 @@ export const Maintenance: React.FC = () => {
                         {!item.serialNumber && !item.notes && (
                           <span className="text-slate-400">-</span>
                         )}
+                      </td>
+                      <td className="px-6 py-4 text-right">
+                        <button
+                          onClick={() => {
+                            if (window.confirm(`${product?.name} cihazını tamir edildi (çalışıyor) olarak işaretlemek istediğinize emin misiniz?`)) {
+                              updateInventoryItem(item.id, { status: 'working' });
+                            }
+                          }}
+                          className="inline-flex items-center px-3 py-1.5 bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400 rounded-lg text-sm font-medium hover:bg-emerald-100 dark:hover:bg-emerald-900/40 transition-colors"
+                        >
+                          <CheckCircle2 className="w-4 h-4 mr-1.5" />
+                          Tamir Edildi
+                        </button>
                       </td>
                     </tr>
                   );
