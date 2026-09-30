@@ -1,6 +1,6 @@
 import React from 'react';
 import { useStore } from '../store/useStore';
-import { Wrench, MapPin, Package, AlertTriangle, CheckCircle2 } from 'lucide-react';
+import { Wrench, MapPin, AlertTriangle, CheckCircle2 } from 'lucide-react';
 
 export const Maintenance: React.FC = () => {
   const { inventory, products, locations, updateInventoryItem } = useStore();

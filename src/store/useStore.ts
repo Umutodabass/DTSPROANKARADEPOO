@@ -61,6 +61,7 @@ interface AppState {
   addLocation: (location: Omit<LocationDefinition, 'id'>) => Promise<void>;
   addInventoryItem: (item: Omit<InventoryItem, 'id'>) => Promise<void>;
   updateInventoryItem: (id: string, item: Partial<InventoryItem>) => Promise<void>;
+  deleteInventoryItem: (id: string) => Promise<void>;
   addShoppingItem: (item: Omit<ShoppingItem, 'id' | 'isCompleted'>) => Promise<void>;
   updateShoppingItem: (id: string, item: Partial<ShoppingItem>) => Promise<void>;
   toggleShoppingItem: (id: string) => Promise<void>;
@@ -194,6 +195,15 @@ export const useStore = create<AppState>()((set, get) => ({
     if (!error) {
       set(state => ({
         inventory: state.inventory.map(item => item.id === id ? { ...item, ...updatedFields } : item)
+      }));
+    }
+  },
+
+  deleteInventoryItem: async (id) => {
+    const { error } = await supabase.from('inventory').delete().eq('id', id);
+    if (!error) {
+      set(state => ({
+        inventory: state.inventory.filter(item => item.id !== id)
       }));
     }
   },

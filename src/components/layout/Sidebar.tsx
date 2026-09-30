@@ -6,7 +6,6 @@ import {
   MapPin, 
   ShoppingCart, 
   Settings,
-  LogOut,
   Users,
   Wrench
 } from 'lucide-react';
