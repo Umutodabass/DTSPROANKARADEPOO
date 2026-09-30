@@ -36,11 +36,13 @@ export const Login: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-[#0a0f1c] relative flex flex-col justify-center py-12 sm:px-6 lg:px-8 overflow-hidden font-sans">
-      {/* Background with Large Faint Logo */}
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-[0.03] select-none">
-        <h1 className="text-[15vw] font-black text-white whitespace-nowrap tracking-tighter">
-          DTS TEKNOLOJİ
-        </h1>
+      {/* Background with Large Faint Rotating Logo */}
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-[0.04] select-none overflow-hidden">
+        <img 
+          src="/dtslogo.png" 
+          alt="Background Logo" 
+          className="w-[120vw] max-w-[1200px] h-auto object-contain animate-[spin_60s_linear_infinite] filter grayscale" 
+        />
       </div>
       
       {/* Glowing Accents */}
@@ -49,8 +51,8 @@ export const Login: React.FC = () => {
 
       <div className="relative z-10 sm:mx-auto sm:w-full sm:max-w-md">
         <div className="flex flex-col items-center justify-center">
-          <div className="bg-white/10 p-6 rounded-3xl backdrop-blur-sm mb-6 border border-white/5 shadow-xl">
-            <img src="/dtslogo.png" alt="DTS Teknoloji" className="h-32 w-auto object-contain drop-shadow-md" />
+          <div className="bg-white/10 p-8 rounded-3xl backdrop-blur-sm mb-6 border border-white/5 shadow-xl">
+            <img src="/dtslogo.png" alt="DTS Teknoloji" className="h-48 w-auto object-contain drop-shadow-md scale-110" />
           </div>
           <p className="mt-2 text-center text-sm text-slate-400 font-medium tracking-wide">
             Depo & Envanter Yönetim Sistemi
