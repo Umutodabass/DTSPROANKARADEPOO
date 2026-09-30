@@ -7,7 +7,8 @@ import {
   ShoppingCart, 
   Settings,
   LogOut,
-  Users
+  Users,
+  Wrench
 } from 'lucide-react';
 import { cn } from '../../lib/utils';
 
@@ -16,6 +17,7 @@ const navItems = [
   { to: '/inventory', icon: Package, label: 'Envanter' },
   { to: '/deployments', icon: MapPin, label: 'Lokasyon ve Saha' },
   { to: '/shopping-list', icon: ShoppingCart, label: 'Alınacaklar' },
+  { to: '/maintenance', icon: Wrench, label: 'Bakımdakiler' },
   { to: '/personnel', icon: Users, label: 'Personel' },
   { to: '/definitions', icon: Settings, label: 'Tanımlar' },
 ];
