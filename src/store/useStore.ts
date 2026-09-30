@@ -40,6 +40,7 @@ export type ShoppingItem = {
   quantity: number;
   isCompleted: boolean;
   requestedBy?: string;
+  supplier?: string;
 };
 
 interface AppState {
@@ -105,7 +106,8 @@ export const useStore = create<AppState>()((set, get) => ({
         category: item.category,
         quantity: item.quantity,
         isCompleted: item.is_completed,
-        requestedBy: item.requested_by
+        requestedBy: item.requested_by,
+        supplier: item.supplier
       }));
 
       set({
@@ -201,7 +203,8 @@ export const useStore = create<AppState>()((set, get) => ({
       name: item.name,
       category: item.category,
       quantity: item.quantity,
-      requested_by: item.requestedBy
+      requested_by: item.requestedBy,
+      supplier: item.supplier
     }]).select().single();
 
     if (!error && data) {
@@ -211,7 +214,8 @@ export const useStore = create<AppState>()((set, get) => ({
         category: data.category,
         quantity: data.quantity,
         isCompleted: data.is_completed,
-        requestedBy: data.requested_by
+        requestedBy: data.requested_by,
+        supplier: data.supplier
       };
       set(state => ({ shoppingList: [...state.shoppingList, mapped] }));
     }
@@ -224,6 +228,7 @@ export const useStore = create<AppState>()((set, get) => ({
     if (updatedFields.quantity !== undefined) updateData.quantity = updatedFields.quantity;
     if (updatedFields.isCompleted !== undefined) updateData.is_completed = updatedFields.isCompleted;
     if (updatedFields.requestedBy !== undefined) updateData.requested_by = updatedFields.requestedBy;
+    if (updatedFields.supplier !== undefined) updateData.supplier = updatedFields.supplier;
 
     const { error } = await supabase.from('shopping_list').update(updateData).eq('id', id);
     if (!error) {

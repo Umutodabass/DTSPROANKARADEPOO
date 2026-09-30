@@ -4,11 +4,12 @@ import { Plus, Check, Trash2, ShoppingCart, Filter, Pencil, Save, X } from 'luci
 import { cn } from '../lib/utils';
 
 export const ShoppingList: React.FC = () => {
-  const { shoppingList, addShoppingItem, updateShoppingItem, toggleShoppingItem, deleteShoppingItem, products } = useStore();
+  const { shoppingList, addShoppingItem, updateShoppingItem, toggleShoppingItem, deleteShoppingItem, products, currentUser } = useStore();
   
   const [selectedProductId, setSelectedProductId] = useState('');
   const [customItemName, setCustomItemName] = useState('');
   const [newItemQty, setNewItemQty] = useState(1);
+  const [supplier, setSupplier] = useState('');
   const [filterCategory, setFilterCategory] = useState('Tümü');
   const [editingItemId, setEditingItemId] = useState<string | null>(null);
 
@@ -37,6 +38,7 @@ export const ShoppingList: React.FC = () => {
         name: itemName,
         category: itemCategory,
         quantity: newItemQty,
+        supplier: supplier.trim() || undefined
       });
       setEditingItemId(null);
     } else {
@@ -44,18 +46,21 @@ export const ShoppingList: React.FC = () => {
         name: itemName,
         category: itemCategory,
         quantity: newItemQty,
-        requestedBy: 'Geçerli Kullanıcı' // In a real app, use currentUser
+        requestedBy: currentUser?.name || 'Bilinmeyen Kullanıcı',
+        supplier: supplier.trim() || undefined
       });
     }
     
     setSelectedProductId('');
     setCustomItemName('');
     setNewItemQty(1);
+    setSupplier('');
   };
 
   const handleEditClick = (item: ShoppingItem) => {
     setEditingItemId(item.id);
     setNewItemQty(item.quantity);
+    setSupplier(item.supplier || '');
     
     const product = products.find(p => p.name === item.name);
     if (product) {
@@ -72,6 +77,7 @@ export const ShoppingList: React.FC = () => {
     setSelectedProductId('');
     setCustomItemName('');
     setNewItemQty(1);
+    setSupplier('');
   };
 
   const filteredList = useMemo(() => {
@@ -144,10 +150,23 @@ export const ShoppingList: React.FC = () => {
                 type="number"
                 id="itemQty"
                 min="1"
+                placeholder="Miktar"
                 value={newItemQty}
                 onChange={(e) => setNewItemQty(parseInt(e.target.value) || 1)}
                 className="w-full px-4 py-2 border border-slate-300 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-slate-800 text-slate-900 dark:text-white"
                 required
+              />
+            </div>
+
+            <div className="w-full sm:w-1/4">
+              <label htmlFor="itemSupplier" className="sr-only">Kimden Alınacak?</label>
+              <input
+                type="text"
+                id="itemSupplier"
+                placeholder="Kimden alınacak? (Opsiyonel)"
+                value={supplier}
+                onChange={(e) => setSupplier(e.target.value)}
+                className="w-full px-4 py-2 border border-slate-300 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-slate-800 text-slate-900 dark:text-white"
               />
             </div>
             <div className="w-full sm:w-auto flex flex-col sm:flex-row gap-2">
@@ -204,9 +223,20 @@ export const ShoppingList: React.FC = () => {
                       <span className="text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-500 font-medium">
                         {item.category || 'Diğer'}
                       </span>
-                      <p className="text-xs text-slate-500">
-                        Miktar: {item.quantity} 
-                        {item.requestedBy && ` • İsteyen: ${item.requestedBy}`}
+                      <p className="text-xs text-slate-500 flex flex-wrap gap-2 items-center">
+                        <span className="font-semibold text-slate-700 dark:text-slate-300">Miktar: {item.quantity}</span>
+                        {item.requestedBy && (
+                          <>
+                            <span className="text-slate-300 dark:text-slate-700">•</span>
+                            <span>İsteyen: <strong className="text-slate-700 dark:text-slate-300">{item.requestedBy}</strong></span>
+                          </>
+                        )}
+                        {item.supplier && (
+                          <>
+                            <span className="text-slate-300 dark:text-slate-700">•</span>
+                            <span>Tedarikçi: <strong className="text-blue-600 dark:text-blue-400">{item.supplier}</strong></span>
+                          </>
+                        )}
                       </p>
                     </div>
                   </div>
