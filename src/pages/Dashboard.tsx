@@ -3,7 +3,7 @@ import { useStore } from '../store/useStore';
 import { Package, MapPin, ShoppingCart, Users } from 'lucide-react';
 
 export const Dashboard: React.FC = () => {
-  const { inventory, locations, shoppingList, users } = useStore();
+  const { inventory, locations, shoppingList, users, products } = useStore();
 
   const totalItems = inventory.reduce((sum, item) => sum + item.quantity, 0);
   const activeDeployments = locations.filter(l => l.type === 'field').length;
@@ -106,6 +106,77 @@ export const Dashboard: React.FC = () => {
                 </dl>
               </div>
             </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Recent Activity Sections */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-8">
+        {/* Recent Inventory */}
+        <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden flex flex-col">
+          <div className="p-5 border-b border-slate-100 dark:border-slate-800 flex justify-between items-center bg-slate-50/50 dark:bg-slate-900/50">
+            <h2 className="text-lg font-semibold text-slate-900 dark:text-white">Son Eklenen Envanterler</h2>
+          </div>
+          <div className="p-5 flex-1">
+            {inventory.length > 0 ? (
+              <ul className="space-y-4">
+                {inventory.slice(-5).reverse().map(item => {
+                  const product = products.find(p => p.id === item.productId);
+                  const location = locations.find(l => l.id === item.locationId);
+                  return (
+                    <li key={item.id} className="flex items-center justify-between p-3 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors border border-transparent hover:border-slate-100 dark:hover:border-slate-800">
+                      <div className="flex items-center space-x-3">
+                        <div className="w-10 h-10 rounded-full bg-blue-50 dark:bg-blue-900/30 flex items-center justify-center flex-shrink-0">
+                          <Package className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+                        </div>
+                        <div className="min-w-0">
+                          <p className="text-sm font-semibold text-slate-900 dark:text-white truncate">{product?.name || 'Bilinmiyor'}</p>
+                          <p className="text-xs text-slate-500 truncate">{location?.name || 'Bilinmeyen Lokasyon'}</p>
+                        </div>
+                      </div>
+                      <span className="text-sm font-bold text-slate-700 dark:text-slate-300 ml-4 bg-slate-100 dark:bg-slate-800 px-2.5 py-1 rounded-md whitespace-nowrap">{item.quantity} Adet</span>
+                    </li>
+                  )
+                })}
+              </ul>
+            ) : (
+              <div className="text-center py-8 text-sm text-slate-500 flex flex-col items-center">
+                <Package className="w-8 h-8 text-slate-300 mb-2" />
+                Henüz envanter kaydı bulunmuyor.
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Pending Shopping */}
+        <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden flex flex-col">
+          <div className="p-5 border-b border-slate-100 dark:border-slate-800 flex justify-between items-center bg-slate-50/50 dark:bg-slate-900/50">
+            <h2 className="text-lg font-semibold text-slate-900 dark:text-white">Alınacak Bekleyenler</h2>
+          </div>
+          <div className="p-5 flex-1">
+            {shoppingList.filter(i => !i.isCompleted).length > 0 ? (
+              <ul className="space-y-4">
+                {shoppingList.filter(i => !i.isCompleted).slice(-5).reverse().map(item => (
+                  <li key={item.id} className="flex items-center justify-between p-3 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors border border-transparent hover:border-slate-100 dark:hover:border-slate-800">
+                    <div className="flex items-center space-x-3">
+                      <div className="w-10 h-10 rounded-full bg-amber-50 dark:bg-amber-900/30 flex items-center justify-center flex-shrink-0">
+                        <ShoppingCart className="w-5 h-5 text-amber-600 dark:text-amber-400" />
+                      </div>
+                      <div className="min-w-0">
+                        <p className="text-sm font-semibold text-slate-900 dark:text-white truncate">{item.name}</p>
+                        <p className="text-xs text-slate-500 truncate">{item.category || 'Kategorisiz'} • {item.requestedBy || 'Talep Eden Yok'}</p>
+                      </div>
+                    </div>
+                    <span className="text-sm font-bold text-amber-700 dark:text-amber-400 ml-4 bg-amber-100 dark:bg-amber-900/20 px-2.5 py-1 rounded-md whitespace-nowrap">{item.quantity} Adet</span>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <div className="text-center py-8 text-sm text-slate-500 flex flex-col items-center">
+                <ShoppingCart className="w-8 h-8 text-slate-300 mb-2" />
+                Bekleyen alınacak malzeme yok.
+              </div>
+            )}
           </div>
         </div>
       </div>

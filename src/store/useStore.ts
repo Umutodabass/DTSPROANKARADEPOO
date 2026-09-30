@@ -64,6 +64,10 @@ interface AppState {
   updateShoppingItem: (id: string, item: Partial<ShoppingItem>) => Promise<void>;
   toggleShoppingItem: (id: string) => Promise<void>;
   deleteShoppingItem: (id: string) => Promise<void>;
+  
+  addUser: (user: Omit<User, 'id'>) => Promise<void>;
+  updateUser: (id: string, user: Partial<User>) => Promise<void>;
+  deleteUser: (id: string) => Promise<void>;
 }
 
 export const useStore = create<AppState>()((set, get) => ({
@@ -245,6 +249,31 @@ export const useStore = create<AppState>()((set, get) => ({
     if (!error) {
       set(state => ({
         shoppingList: state.shoppingList.filter(item => item.id !== id)
+      }));
+    }
+  },
+
+  addUser: async (user) => {
+    const { data, error } = await supabase.from('users').insert([user]).select().single();
+    if (!error && data) {
+      set(state => ({ users: [...state.users, data] }));
+    }
+  },
+
+  updateUser: async (id, updatedFields) => {
+    const { error } = await supabase.from('users').update(updatedFields).eq('id', id);
+    if (!error) {
+      set(state => ({
+        users: state.users.map(u => u.id === id ? { ...u, ...updatedFields } : u)
+      }));
+    }
+  },
+
+  deleteUser: async (id) => {
+    const { error } = await supabase.from('users').delete().eq('id', id);
+    if (!error) {
+      set(state => ({
+        users: state.users.filter(u => u.id !== id)
       }));
     }
   }

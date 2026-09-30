@@ -6,6 +6,7 @@ import { Dashboard } from './pages/Dashboard';
 import { Inventory } from './pages/Inventory';
 import { Deployments } from './pages/Deployments';
 import { ShoppingList } from './pages/ShoppingList';
+import { Personnel } from './pages/Personnel';
 import { Definitions } from './pages/Definitions';
 import { useStore } from './store/useStore';
 
@@ -37,6 +38,7 @@ function App() {
           <Route path="inventory" element={<Inventory />} />
           <Route path="deployments" element={<Deployments />} />
           <Route path="shopping-list" element={<ShoppingList />} />
+          <Route path="personnel" element={<Personnel />} />
           <Route path="definitions" element={<Definitions />} />
         </Route>
       </Routes>

@@ -6,7 +6,8 @@ import {
   MapPin, 
   ShoppingCart, 
   Settings,
-  LogOut
+  LogOut,
+  Users
 } from 'lucide-react';
 import { useStore } from '../../store/useStore';
 import { cn } from '../../lib/utils';
@@ -14,8 +15,9 @@ import { cn } from '../../lib/utils';
 const navItems = [
   { to: '/', icon: LayoutDashboard, label: 'Dashboard' },
   { to: '/inventory', icon: Package, label: 'Envanter' },
-  { to: '/deployments', icon: MapPin, label: 'Saha Takip' },
+  { to: '/deployments', icon: MapPin, label: 'Lokasyon ve Saha' },
   { to: '/shopping-list', icon: ShoppingCart, label: 'Alınacaklar' },
+  { to: '/personnel', icon: Users, label: 'Personel' },
   { to: '/definitions', icon: Settings, label: 'Tanımlar' },
 ];
 
