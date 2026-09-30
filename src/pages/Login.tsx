@@ -37,11 +37,11 @@ export const Login: React.FC = () => {
   return (
     <div className="min-h-screen bg-[#0a0f1c] relative flex flex-col justify-center py-12 sm:px-6 lg:px-8 overflow-hidden font-sans">
       {/* Background with Large Faint Rotating Logo */}
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-[0.04] select-none overflow-hidden">
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-10 select-none overflow-hidden">
         <img 
           src="/dtslogo.png" 
           alt="Background Logo" 
-          className="w-[120vw] max-w-[1200px] h-auto object-contain animate-[spin_60s_linear_infinite] filter grayscale" 
+          className="w-[300vw] h-[300vw] sm:w-[150vw] sm:h-[150vw] max-w-none object-contain animate-[spin_90s_linear_infinite] filter grayscale" 
         />
       </div>
       
