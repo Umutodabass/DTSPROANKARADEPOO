@@ -25,8 +25,8 @@ const navItems = [
 export const Sidebar: React.FC = () => {
   return (
     <aside className="w-64 bg-slate-900 text-slate-300 flex flex-col h-full border-r border-slate-800">
-      <div className="h-24 flex items-center px-6 border-b border-slate-800 bg-white/5 py-4">
-        <img src="/dtslogo.png" alt="DTS Teknoloji" className="h-16 w-auto object-contain mx-auto" />
+      <div className="h-28 flex items-center justify-center border-b border-slate-800 bg-white/5 overflow-hidden">
+        <img src="/dtslogo.png" alt="DTS Teknoloji" className="w-4/5 h-full object-contain scale-125 hover:scale-150 transition-transform duration-300" />
       </div>
       
       <nav className="flex-1 py-6 px-3 space-y-1">
